@@ -13,8 +13,19 @@ def login(call):
         # 登录系统
         bs.login()
         res = call(**kwargs)
+        return res
+
+    return wrapped_view
+
+def logout(call):
+    """
+    退出登录，执行回调
+    """
+    @functools.wraps(call)
+    def wrapped_view(**kwargs):
         # 退出系统
         bs.logout()
+        res = call(**kwargs)
         return res
 
     return wrapped_view
