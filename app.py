@@ -22,6 +22,11 @@ def user():
     start = data['start']
     end = data['end']
     res = {}
-    for code in codes:
-        res[code] = get_k_data_json(code, start, end)
+    try:
+        for code in codes:
+            res[code] = get_k_data_json(code, start, end)
+    except Exception as e:
+        # 尝试重新登录
+        print('============>', e)
+        login(None)
     return res

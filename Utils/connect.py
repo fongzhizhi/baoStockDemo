@@ -12,7 +12,8 @@ def login(call):
     def wrapped_view(**kwargs):
         # 登录系统
         bs.login()
-        res = call(**kwargs)
+        if call:
+            res = call(**kwargs)
         return res
 
     return wrapped_view
@@ -25,7 +26,8 @@ def logout(call):
     def wrapped_view(**kwargs):
         # 退出系统
         bs.logout()
-        res = call(**kwargs)
+        if call:
+            res = call(**kwargs)
         return res
 
     return wrapped_view

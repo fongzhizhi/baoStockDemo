@@ -31,5 +31,5 @@ def getPriceIndexs(price_list: list, basePrice: float = None):
 def get_k_data_json(code: str, start: str, end: str):
     """获取json格式的K线数据
     """
-    data = query_k_data(code, ('date', 'close'), start, end)
+    data = query_k_data(code, ('code', 'date', 'open', 'close', 'high', 'low'), start, end)
     return data.to_json(orient='records', double_precision = 2)
