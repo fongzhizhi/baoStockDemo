@@ -1,6 +1,11 @@
 import baostock as bs
 import pandas as pd
+from apis.common import queryResult_to_DataFrame
 
+"""
+k线查询相关api
+"""
+@queryResult_to_DataFrame(('open','close', 'high', 'low', 'preclose', 'volume', 'amount'))
 def query_k_data(code: str, fields: tuple, start: str = None, end: str = None, frequency: str="d", adjustflag: str='3'):
     """查询K线数据
 
@@ -30,29 +35,7 @@ def query_k_data(code: str, fields: tuple, start: str = None, end: str = None, f
         frequency: k线类型。默认日k。d(日) | w(周) | m(月) | 5(5min) | 15(15min) | 30(30min) | 60(60min)
         adjustflag: 复权类型。默认不复权。1(后赋权) | 2(前复权) | 3(不复权)
     """
-    # 获取数据
-    k_data = bs.query_history_k_data_plus(code, ','.join(fields), start, end, frequency, adjustflag)
-    if k_data is None:
-        raise ValueError('Query data is None!')
-    if k_data.error_code != '0':
-        raise ValueError(k_data.error_msg)
-    # 转换为 DataFrame
-    data_list = []
-    columns = k_data.fields
-    # 记录需要转换为数字的项
-    number_fields = ('open','close', 'high', 'low', 'preclose', 'volume', 'amount')
-    convert2FloatIndex = []
-    for i, v in enumerate(columns):
-        if v in number_fields:
-            convert2FloatIndex.append(i)
-    
-    
-    while (k_data.error_code == '0') & k_data.next():
-        row = k_data.get_row_data()
-        for index in convert2FloatIndex:
-            row[index] = float(row[index])
-        data_list.append(row)
-    return pd.DataFrame(data_list, columns=columns)
+    return bs.query_history_k_data_plus(code, ','.join(fields), start, end, frequency, adjustflag)
 
 def get_k_data_json(code: str, start: str, end: str):
     """获取json格式的K线数据
