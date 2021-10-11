@@ -1,5 +1,5 @@
 from utils.connect import login
-from analyze.priceIndex import get_k_data_json
+from apis.query_k_data import get_k_data_json
 from flask import Flask, request
 
 @login
