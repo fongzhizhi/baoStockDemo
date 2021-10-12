@@ -1,5 +1,4 @@
 import baostock as bs
-import pandas as pd
 from apis.common import queryResult_to_DataFrame
 
 """
@@ -37,8 +36,8 @@ def query_k_data(code: str, fields: tuple, start: str = None, end: str = None, f
     """
     return bs.query_history_k_data_plus(code, ','.join(fields), start, end, frequency, adjustflag)
 
-def get_k_data_json(code: str, start: str, end: str):
+def get_k_data_json(code: str, start: str, end: str, frequency: str = 'd'):
     """获取json格式的K线数据
     """
-    data = query_k_data(code, ('code', 'date', 'open', 'close', 'high', 'low'), start, end)
+    data = query_k_data(code, ('code', 'date', 'open', 'close', 'high', 'low'), start, end, frequency)
     return data.to_json(orient='records', double_precision = 2)

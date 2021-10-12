@@ -1,6 +1,6 @@
-from apis.query_meta_info import get_all_stock_json, get_meta_info_json
+from apis.meta_info import get_all_stock_json, get_meta_info_json
 from utils.connect import login
-from apis.query_k_data import get_k_data_json
+from apis.k_data import get_k_data_json
 from flask import Flask, request
 
 @login
@@ -25,9 +25,10 @@ def _get_k_data_json():
         codes = [data['code']]
     start = data['start']
     end = data['end']
+    frequency = data['frequency'] if ('frequency' in data) else None
     res = {}
     for code in codes:
-        res[code] = get_k_data_json(code, start, end)
+        res[code] = get_k_data_json(code, start, end, frequency)
     return res
 
 

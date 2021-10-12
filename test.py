@@ -1,4 +1,4 @@
-from apis.query_meta_info import query_all_stock
+from apis.meta_info import query_all_stock
 from utils.connect import login
 from utils.io import getRealPathRelativeToFile
 
