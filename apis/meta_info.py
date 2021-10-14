@@ -5,7 +5,7 @@ from apis.common import queryResult_to_DataFrame
 证券元信息查询相关api
 """
 
-@queryResult_to_DataFrame()
+@queryResult_to_DataFrame(('tradeStatus'))
 def query_all_stock(date=None):
     """获取指定交易日期所有股票列表
 
@@ -23,7 +23,7 @@ def get_all_stock_json(date=None):
     return data.to_json(orient='records')
 
 
-@queryResult_to_DataFrame()
+@queryResult_to_DataFrame(('type', 'status'))
 def query_meta_info(code):
     """获取股票元数据
 
