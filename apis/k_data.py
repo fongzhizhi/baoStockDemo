@@ -1,11 +1,12 @@
 import baostock as bs
+from pandas.core.frame import DataFrame
 from apis.common import queryResult_to_DataFrame
 
 """
 k线查询相关api
 """
 @queryResult_to_DataFrame(('open','close', 'high', 'low', 'preclose', 'volume', 'amount'))
-def query_k_data(code: str, fields: tuple, start: str = None, end: str = None, frequency: str="d", adjustflag: str='3'):
+def query_k_data(code: str, fields: tuple, start: str = None, end: str = None, frequency: str="d", adjustflag: str='3') -> DataFrame: 
     """查询K线数据
 
     Args:
@@ -40,4 +41,4 @@ def get_k_data_json(code: str, start: str, end: str, frequency: str = 'd'):
     """获取json格式的K线数据
     """
     data = query_k_data(code, ('code', 'date', 'open', 'close', 'high', 'low'), start, end, frequency)
-    return data.to_json(orient='records', double_precision = 2)
+    return data.to_dict(orient='records')

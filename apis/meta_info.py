@@ -1,4 +1,5 @@
 import baostock as bs
+from pandas.core.frame import DataFrame
 from apis.common import queryResult_to_DataFrame
 
 """
@@ -6,7 +7,7 @@ from apis.common import queryResult_to_DataFrame
 """
 
 @queryResult_to_DataFrame(('tradeStatus'))
-def query_all_stock(date=None):
+def query_all_stock(date=None) -> DataFrame:
     """获取指定交易日期所有股票列表
 
     Args:
@@ -20,11 +21,11 @@ def get_all_stock_json(date=None):
     """获取json格式的所有股票数据
     """
     data = query_all_stock(date)
-    return data.to_json(orient='records')
+    return data.to_dict(orient='records')
 
 
 @queryResult_to_DataFrame(('type', 'status'))
-def query_meta_info(code):
+def query_meta_info(code) -> DataFrame:
     """获取股票元数据
 
     Args:
@@ -36,4 +37,4 @@ def get_meta_info_json(code):
     """获取json格式的股票元数据
     """
     data = query_meta_info(code)
-    return data.to_json(orient='records')
+    return data.to_dict(orient='records')

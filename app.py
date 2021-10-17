@@ -25,7 +25,7 @@ def _get_k_data_json():
         codes = [data['code']]
     start = data['start']
     end = data['end']
-    frequency = data['frequency'] if ('frequency' in data) else None
+    frequency = data['frequency'] if ('frequency' in data) else 'd'
     res = {}
     for code in codes:
         res[code] = get_k_data_json(code, start, end, frequency)

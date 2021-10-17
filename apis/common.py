@@ -36,7 +36,10 @@ def queryResult_to_DataFrame(number_fields: Tuple = None):
             while (query_data.error_code == '0') & query_data.next():
                 row = query_data.get_row_data()
                 for index in convert2FloatIndex:
-                    row[index] = float(row[index])
+                    try:
+                        row[index] = float(row[index])
+                    except Exception as e:
+                        print(e, '=>', row[index])
                 data_list.append(row)
             return pd.DataFrame(data_list, columns=columns)
         return formate
